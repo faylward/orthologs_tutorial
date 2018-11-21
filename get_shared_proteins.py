@@ -3,6 +3,7 @@ from collections import defaultdict
 import itertools
 
 genome_reps = defaultdict(list)
+unique_reps = defaultdict(list)
 
 input = open(sys.argv[1])
 tally = 0
@@ -27,20 +28,22 @@ for i in input.readlines():
 				pass
 			else:
 				genome_reps[genome_names[index]].append(cluster_name)
-
+				if int(tabs[0]) == int(1):
+					unique_reps[genome_names[index]].append(cluster_name)
+				
 keys = genome_reps.keys()
 combinations = list(itertools.combinations(keys, 2))
 
-for i in genome_reps:
-	print "Orthologs unique to", i, " = ", len(genome_reps[i])
+for i in unique_reps:
+	print("Orthologs unique to", i, " = ", len(unique_reps[i]))
 
-print "\n"
+print("\n")
 
 for i in combinations:
 	set1 = set(genome_reps[i[0]])
 	set2 = set(genome_reps[i[1]])
-	print "Shared clusters between "+ i[0] +" and "+ i[1] +" = "+ str(len(set1.intersection(set2)))
+	print("Shared clusters between "+ i[0] +" and "+ i[1] +" = "+ str(len(set1.intersection(set2))))
 
-print "\nShared between all genomes = " +str(all3)
+print("\nShared between all genomes = " +str(all3))
 
 
